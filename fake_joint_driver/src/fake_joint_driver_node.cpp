@@ -30,16 +30,15 @@ int main(int argc, char **argv) {
   // Connect to controller manager
   controller_manager::ControllerManager cm(robot, executor);
 
-  cm.load_controller("ros_controllers", "ros_controllers::JointStateController", "fake_joint_state_controller");
-  cm.load_controller("ros_controllers", "ros_controllers::JointTrajectoryController",
-                     "fake_joint_trajectory_controller");
+  // cm.load_controller("fake_joint_state_controller", "ros_controllers::JointStateController");
+  cm.load_controller("fake_joint_trajectory_controller", "ros_controllers::JointTrajectoryController");
 
   // there is no async spinner in ROS 2, so we have to put the spin() in its own thread
   auto future_handle = std::async(std::launch::async, spin, executor);
 
   // we can either configure each controller individually through its services
   // or we use the controller manager to configure every loaded controller
-  if (cm.configure() != controller_interface::CONTROLLER_INTERFACE_RET_SUCCESS)
+  if (cm.configure() != controller_interface::return_type::SUCCESS)
   {
     RCLCPP_ERROR(LOGGER, "at least one controller failed to configure");
     return -1;
@@ -47,7 +46,7 @@ int main(int argc, char **argv) {
   RCLCPP_INFO(LOGGER, "Successfully configured all controllers");
 
   // and activate all controller
-  if (cm.activate() != controller_interface::CONTROLLER_INTERFACE_RET_SUCCESS)
+  if (cm.activate() != controller_interface::return_type::SUCCESS)
   {
     RCLCPP_ERROR(LOGGER, "At least one controller failed to activate");
     return -1;

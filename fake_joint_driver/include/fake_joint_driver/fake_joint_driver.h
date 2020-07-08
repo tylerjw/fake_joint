@@ -36,15 +36,15 @@ public:
   ~FakeJointDriver();
   hardware_interface::hardware_interface_ret_t init() override
   {
-    return hardware_interface::HW_RET_OK;
+    return hardware_interface::return_type::OK;
   }
   void update();
   hardware_interface::hardware_interface_ret_t read() override
   {
-    return hardware_interface::HW_RET_OK;
+    return hardware_interface::return_type::OK;
   }
   hardware_interface::hardware_interface_ret_t write() override
   {
-    return hardware_interface::HW_RET_OK;
+    return hardware_interface::return_type::OK;
   }
 };

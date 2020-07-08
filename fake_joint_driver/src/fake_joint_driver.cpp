@@ -121,17 +121,17 @@ FakeJointDriver::FakeJointDriver(const rclcpp::Node::SharedPtr& node)
     // Connect and register the joint_state_interface
     joint_state_handles_[i] =
         hardware_interface::JointStateHandle(joint_names_[i], &act_dis[i], &act_vel[i], &act_eff[i]);
-    if (register_joint_state_handle(&joint_state_handles_[i]) != hardware_interface::HW_RET_OK)
+    if (register_joint_state_handle(&joint_state_handles_[i]) != hardware_interface::return_type::OK)
       throw std::runtime_error("unable to register " + joint_state_handles_[i].get_name());
 
     joint_command_handles_[i] = hardware_interface::JointCommandHandle(joint_names_[i], &cmd_dis[i]);
-    if (register_joint_command_handle(&joint_command_handles_[i]) != hardware_interface::HW_RET_OK)
+    if (register_joint_command_handle(&joint_command_handles_[i]) != hardware_interface::return_type::OK)
     {
       throw std::runtime_error("unable to register " + joint_command_handles_[i].get_name());
     }
 
     joint_mode_handles_[i] = hardware_interface::OperationModeHandle(joint_names_[i], &op_mode[i]);
-    if (register_operation_mode_handle(&joint_mode_handles_[i]) != hardware_interface::HW_RET_OK)
+    if (register_operation_mode_handle(&joint_mode_handles_[i]) != hardware_interface::return_type::OK)
     {
       throw std::runtime_error("unable to register " + joint_mode_handles_[i].get_name());
     }
