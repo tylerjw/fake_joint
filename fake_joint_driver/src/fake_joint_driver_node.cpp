@@ -30,8 +30,8 @@ int main(int argc, char **argv) {
   // Connect to controller manager
   controller_manager::ControllerManager cm(robot, executor);
 
-  // cm.load_controller("fake_joint_state_controller", "ros_controllers::JointStateController");
-  cm.load_controller("fake_joint_trajectory_controller", "ros_controllers::JointTrajectoryController");
+  cm.load_controller("fake_joint_state_controller", "joint_state_controller/JointStateController");
+  cm.load_controller("fake_joint_trajectory_controller", "joint_trajectory_controller/JointTrajectoryController");
 
   // there is no async spinner in ROS 2, so we have to put the spin() in its own thread
   auto future_handle = std::async(std::launch::async, spin, executor);
