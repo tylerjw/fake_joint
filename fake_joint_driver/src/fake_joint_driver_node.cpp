@@ -20,18 +20,27 @@ void spin(std::shared_ptr<rclcpp::executors::MultiThreadedExecutor> exe)
 /**
  * @brief Main function
  */
-int main(int argc, char **argv) {
+int main(int argc, char** argv)
+{
   // Init ROS node
   rclcpp::init(argc, argv);
   auto executor = std::make_shared<rclcpp::executors::MultiThreadedExecutor>();
-  // Create hardware interface
-  auto robot = std::make_shared<FakeJointDriver>(rclcpp::Node::make_shared("fake_joint_driver_node"));
+  auto node = rclcpp::Node::make_shared("fake_joint_driver_node");
 
+  auto controller_name = node->declare_parameter("controller_name", std::string());
+  if (controller_name.empty())
+  {
+    RCLCPP_ERROR(LOGGER, "Can't have empty controller name -- please set the parameter `controller_name`");
+    return -1;
+  }
+
+  // Create hardware interface
+  auto robot = std::make_shared<FakeJointDriver>(node);
   // Connect to controller manager
   controller_manager::ControllerManager cm(robot, executor);
 
   cm.load_controller("fake_joint_state_controller", "joint_state_controller/JointStateController");
-  cm.load_controller("fake_joint_trajectory_controller", "joint_trajectory_controller/JointTrajectoryController");
+  cm.load_controller(controller_name, "joint_trajectory_controller/JointTrajectoryController");
 
   // there is no async spinner in ROS 2, so we have to put the spin() in its own thread
   auto future_handle = std::async(std::launch::async, spin, executor);
