@@ -11,6 +11,7 @@
 #include <rclcpp/rclcpp.hpp>
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("fake_joint_driver");
+static constexpr double SPIN_RATE = 200;  // Hz
 
 void spin(std::shared_ptr<rclcpp::executors::MultiThreadedExecutor> exe)
 {
@@ -63,7 +64,7 @@ int main(int argc, char** argv)
   RCLCPP_INFO(LOGGER, "Successfully activated all controllers");
 
   // Set spin rate
-  rclcpp::Rate rate(1.0 / rclcpp::Duration(0.010).seconds());
+  rclcpp::Rate rate(SPIN_RATE);
   while (rclcpp::ok())
   {
     robot->update();
