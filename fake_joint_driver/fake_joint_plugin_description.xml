@@ -1,0 +1,9 @@
+<library path="fake_joint_driver">
+    <class name="fake_joint_driver/FakeJointDriver"
+           type="FakeJointDriver"
+           base_class_type="hardware_interface::SystemInterface">
+        <description>
+            The ROS2 Control fake joint driver
+        </description>
+    </class>
+</library>

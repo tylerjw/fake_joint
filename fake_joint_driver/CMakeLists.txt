@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10.2)
 project(fake_joint_driver)
 
-# Default to C++14
+# Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 find_package(ament_cmake REQUIRED)
@@ -16,10 +16,9 @@ find_package(xacro REQUIRED)
 
 include_directories(include)
 
-add_executable(fake_joint_driver_node
-  src/fake_joint_driver_node.cpp src/fake_joint_driver.cpp)
+add_library(${PROJECT_NAME} SHARED src/fake_joint_driver.cpp)
 
-ament_target_dependencies(fake_joint_driver_node
+ament_target_dependencies(${PROJECT_NAME}
     rclcpp
     controller_manager
     hardware_interface
@@ -27,9 +26,7 @@ ament_target_dependencies(fake_joint_driver_node
     urdf
 )
 
-install(TARGETS fake_joint_driver_node
-  RUNTIME DESTINATION lib/${PROJECT_NAME}
-)
+install(TARGETS ${PROJECT_NAME} DESTINATION lib)
 
 install(DIRECTORY config robot test
   DESTINATION share)
@@ -55,5 +52,7 @@ install(DIRECTORY include/${PROJECT_NAME}/
 
 #   add_rostest(test/fake_joint_driver.test)
 # endif()
+
+pluginlib_export_plugin_description_file(hardware_interface fake_joint_plugin_description.xml)
 ament_export_dependencies(rclcpp)
 ament_package()

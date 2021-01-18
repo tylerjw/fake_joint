@@ -11,7 +11,7 @@
 #include <rclcpp/rclcpp.hpp>
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("fake_joint_driver");
-static constexpr double SPIN_RATE = 200;  // Hz
+static constexpr double SPIN_RATE = 50;  // Hz
 
 void spin(std::shared_ptr<rclcpp::executors::MultiThreadedExecutor> exe)
 {
@@ -25,7 +25,8 @@ int main(int argc, char** argv)
 {
   // Init ROS node
   rclcpp::init(argc, argv);
-  auto executor = std::make_shared<rclcpp::executors::MultiThreadedExecutor>();
+  auto executor = std::make_shared<rclcpp::executors::MultiThreadedExecutor>(rclcpp::ExecutorOptions(), 4);
+
   auto node = rclcpp::Node::make_shared("fake_joint_driver_node");
 
   auto controller_name = node->declare_parameter("controller_name", std::string());
@@ -38,7 +39,8 @@ int main(int argc, char** argv)
   // Create hardware interface
   auto robot = std::make_shared<FakeJointDriver>(node);
   // Connect to controller manager
-  controller_manager::ControllerManager cm(robot, executor);
+  controller_manager::ControllerManager cm(executor);
+  cm->
 
   cm.load_controller("fake_joint_state_controller", "joint_state_controller/JointStateController");
   cm.load_controller(controller_name, "joint_trajectory_controller/JointTrajectoryController");
