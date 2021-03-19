@@ -27,4 +27,3 @@ if(CATKIN_ENABLE_TESTING)
     roslaunch_add_file_check(${LAUNCH_FILE})
   endforeach()
 endif()
-
