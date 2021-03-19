@@ -1,4 +1,4 @@
-# fake_joint [![Build Status](https://travis-ci.org/tork-a/fake_joint.svg?branch=master)](https://travis-ci.org/tork-a/fake_joint)
+# fake_joint [![Format](https://github.com/JafarAbdi/fake_joint/actions/workflows/format.yml/badge.svg?branch=release_to_melodic)](https://github.com/JafarAbdi/fake_joint/actions/workflows/format.yml?branch=release_to_melodic) [![BuildAndTest](https://github.com/JafarAbdi/fake_joint/actions/workflows/industrial_ci_action.yml/badge.svg?branch=release_to_melodic)](https://github.com/JafarAbdi/fake_joint/actions/workflows/industrial_ci_action.yml?branch=release_to_melodic)
 
 ## What is this?
 
