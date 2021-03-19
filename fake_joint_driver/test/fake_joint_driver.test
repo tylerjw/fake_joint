@@ -28,4 +28,3 @@
   <test test-name="test_fake_joint_driver" pkg="fake_joint_driver" type="test_fake_joint_driver.py"/>
 
 </launch>
-

@@ -124,4 +124,3 @@ void FakeJointDriver::update(void)
   // only do loopback
   act_dis = cmd_dis;
 }
-
